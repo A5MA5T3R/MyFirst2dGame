@@ -1,104 +1,70 @@
 #include "main.h"
 
+#include <set>
 
-bool displayText = false;
+
+RenderWindow window;
+
+
+Input input;
 
 Font font; 
-Text clicText;
+Text txt, positionX, positionY;
+float posX = 20, posY = 20;
+char temp[256];
+CircleShape circle1(20);
 
+
+   
 int main()
 {
-    RenderWindow window;
-    window.create(VideoMode::getDesktopMode(), GAME_NAME, Style::Fullscreen);
+
+    ContextSettings options;
+    options.antialiasingLevel = 8;
+    window.create(VideoMode::getDesktopMode(), GAME_NAME, Style::Fullscreen, options);
     window.setVerticalSyncEnabled(true);
+    Vector2u windowSize = window.getSize();
+    float maxX = windowSize.x;
+    float maxY = windowSize.y;
+
+    circle1.setFillColor(Color::White);
+    circle1.setOrigin(20, 20);
+    
+
 
     loadFont(font);
-    Text txt;
     setText(txt, font,"Ntm césar", 50, Color::Red, Text::Bold | Text::Underlined);
 
-    Text escText;
-    setText(escText, font, "JE REGARDE PAS", 150, Color::Yellow, Text::Bold);
-    
-    Text spaceText;
-    setText(spaceText, font, "JEN AI MARRE", 500, Color::Blue, Text::Bold);
-
-    while (window.isOpen())
+	while (window.isOpen())
     {
         Event event;
 
         while (window.pollEvent(event))
         {
-            ImputHandler(event, window);
+            input.InputHandler(event, window);
+            txt.setString("");
         }
+
+        checkButton(maxX, maxY);
+
 
         window.clear(Color::Black);
 
-
-        if (Keyboard::isKeyPressed(Keyboard::Z))
-        {
-            setText(txt, font, "Z", 500, Color::Blue, Text::Bold);
-            window.draw(txt);
-        }
-        if (Keyboard::isKeyPressed(Keyboard::Q))
-        {
-            setText(txt, font, "Q", 500, Color::Blue, Text::Bold);
-            window.draw(txt);
-        }
-        if (Keyboard::isKeyPressed(Keyboard::S))
-        {
-            setText(txt, font, "S", 500, Color::Blue, Text::Bold);
-            window.draw(txt);
-        }
-        if (Keyboard::isKeyPressed(Keyboard::D))
-        {
-            setText(txt, font, "D", 500, Color::Blue, Text::Bold);
-            window.draw(txt);
-        }
-
-
-        if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            setText(clicText, font, "Gauche", 500, Color::Blue, Text::Bold);
-            window.draw(clicText);
-        }
-        if (Mouse::isButtonPressed(Mouse::Right))
-        {
-            setText(clicText, font, "Droite", 500, Color::Blue, Text::Bold);
-            window.draw(clicText);
-        }
-        if (Mouse::isButtonPressed(Mouse::Middle))
-        {
-            setText(clicText, font, "Middle", 500, Color::Blue, Text::Bold);
-            window.draw(clicText);
-        }
-
-
-        if (displayText) window.draw(escText);
-
-        if (Keyboard::isKeyPressed(Keyboard::Space)) 
-        {
-            window.draw(spaceText);
-        }
+		window.draw(txt);
+		window.draw(positionX);
+		window.draw(positionY);
+        window.draw(circle1);
 
         window.display();
+
     }
     
     return 0;
 }
 
-
-void ImputHandler(Event event, RenderWindow& window) 
-{
-
-    if (event.type == Event::Closed) window.close();
-
-    if (event.type == Event::KeyPressed) keypressedImput(window ,event);
-
-}
-
 void loadFont(Font &font) 
 {
-    if (!font.loadFromFile("res/font_halloween.ttf")) cout << "can't load font" << endl;
+    if (!font.loadFromFile("res/fonts/font_halloween.ttf")) cout << "can't load font" << endl;
     
 }
 
@@ -111,14 +77,73 @@ void setText(Text& txt, Font& font, String texte, unsigned int charSize, Color c
     txt.setStyle(style);
 }
 
-void keypressedImput(RenderWindow& window, Event& event)
+void checkButton(float maxX, float maxY)
 {
-    if (event.key.code == Keyboard::Escape)
+    if(input.GetButton().left == true)
     {
-        displayText = true;
-    }
-}
+        cout << "avant1 : " << posX << endl;
+        posX -= 10;
+        cout << "apres1 : " << posX << endl;
 
+        if (posX < 0)
+            posX = 0;
+        if (posX >= maxX)
+            posX = maxX;
+        //sprintf_s(temp, "%d", posX);
+        //setText(positionX, font, temp, 300, Color::Blue, Text::Bold);
+    }
+
+    if(input.GetButton().right == true)
+    {
+        cout << "avant2 : " << posX << endl;
+        posX += 10;
+        cout << "apres2 : " << posX << endl;
+
+        if (posX < 0)
+            posX = 0;
+        if (posX >= maxX)
+            posX = maxX;
+        //sprintf_s(temp, "%d", posX);
+        //setText(positionX, font, temp, 300, Color::Blue, Text::Bold);
+    }
+
+    if (input.GetButton().up == true)
+    {
+        posY -= 10;
+        if (posY < 0)
+            posY = 0;
+        if (posY >= maxY)
+            posY = maxY;
+        //sprintf_s(temp, "%d", posY);
+        //setText(positionY, font, temp, 500, Color::Yellow, Text::Bold);
+    }
+
+    if (input.GetButton().down == true)
+    {
+        posY += 10;
+        if (posY < 0)
+            posY = 0;
+        if (posY >= maxY)
+            posY = maxY;
+        //sprintf_s(temp, "%d", posY);
+        //setText(positionY, font, temp, 500, Color::Yellow, Text::Bold);
+    }
+
+    circle1.setPosition(posX, posY);
+
+
+    if (input.GetButton().attack == true)
+    {
+        setText(txt, font, "Attack", 500, Color::White, Text::Bold);
+    }
+
+    if (input.GetButton().escape == true)
+    {
+        window.close();
+    }
+
+
+}
 
 
 

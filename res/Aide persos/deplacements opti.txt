@@ -1,0 +1,37 @@
+if (Keyboard::isKeyPressed(Keyboard::Z))
+{
+    setText(txt, font, "Z", 500, Color::Blue, Text::Bold);
+    window.draw(txt);
+}
+if (Keyboard::isKeyPressed(Keyboard::Q))
+{
+    setText(txt, font, "Q", 500, Color::Blue, Text::Bold);
+    window.draw(txt);
+}
+if (Keyboard::isKeyPressed(Keyboard::S))
+{
+    setText(txt, font, "S", 500, Color::Blue, Text::Bold);
+    window.draw(txt);
+}
+if (Keyboard::isKeyPressed(Keyboard::D))
+{
+    setText(txt, font, "D", 500, Color::Blue, Text::Bold);
+    window.draw(txt);
+}
+
+
+if (Mouse::isButtonPressed(Mouse::Left))
+{
+    setText(clicText, font, "Gauche", 500, Color::Blue, Text::Bold);
+    window.draw(clicText);
+}
+if (Mouse::isButtonPressed(Mouse::Right))
+{
+    setText(clicText, font, "Droite", 500, Color::Blue, Text::Bold);
+    window.draw(clicText);
+}
+if (Mouse::isButtonPressed(Mouse::Middle))
+{
+    setText(clicText, font, "Middle", 500, Color::Blue, Text::Bold);
+    window.draw(clicText);
+}
