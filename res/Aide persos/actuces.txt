@@ -1,8 +1,0 @@
-AFFICHER UN CHIFFRE COMME UN CARACTERE
-
-float posX = 20, posY = 20;
-char temp[256];
-
-
-sprintf_s(temp, "%d", posY);
-setText(positionY, font, temp, 500, Color::Yellow, Text::Bold);

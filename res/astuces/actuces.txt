@@ -1,0 +1,20 @@
+AFFICHER UN CHIFFRE COMME UN CARACTERE
+
+float posX = 20, posY = 20;
+char temp[256];
+
+sprintf_s(temp, "%d", posY);
+setText(positionY, font, temp, 500, Color::Yellow, Text::Bold);
+
+
+TRAVAILLER EN FULLSCREEN et recup les co max
+window.create(VideoMode::getDesktopMode(), GAME_NAME, Style::Fullscreen);
+Vector2u windowSize = window.getSize();
+    unsigned int maxX = windowSize.x;
+    unsigned int maxY = windowSize.y;
+
+
+RECHERCHES
+sprite sheet
+sprite sheet generator (rpg)
+sprite sheet cc0 (public) ou opengameart.org    itch.io

@@ -19,6 +19,7 @@ void Input::InputHandler(Event event, RenderWindow& window)
 		window.close();
 	}
 
+
 	if (event.type == Event::KeyPressed)
 	{
 		switch (event.key.code)
@@ -29,22 +30,18 @@ void Input::InputHandler(Event event, RenderWindow& window)
 
 		case Keyboard::Z:
 			button.up = true;
-			button.down = false;
 			break;	
 
 		case Keyboard::Q:
 			button.left = true;
-			button.right = false;
 			break;
 
 		case Keyboard::S:
 			button.down = true;
-			button.up = false;
 			break;
 			
 		case Keyboard::D:
 			button.right = true;
-			button.left = false;
 			break;
 
 		default:

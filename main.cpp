@@ -5,35 +5,29 @@
 
 RenderWindow window;
 
-
 Input input;
 
-Font font; 
-Text txt, positionX, positionY;
-float posX = 20, posY = 20;
-char temp[256];
-CircleShape circle1(20);
+Texture wiseTexture;
+Sprite wiseSprite;
 
+enum Directions { Down, Right, Up, Left, Down_Atk, Right_Atk, Up_Atk, Left_Atk };
+
+Vector2i wiseAnim(0, Down);
+Clock wiseAnimClock;
+
+bool wiseIdle = true;
+bool wiseAtk = false;
 
    
 int main()
 {
-
-    ContextSettings options;
-    options.antialiasingLevel = 8;
-    window.create(VideoMode::getDesktopMode(), GAME_NAME, Style::Fullscreen, options);
+    window.create(VideoMode(WIN_WIDTH, WIN_HEIGHT,32), GAME_NAME, Style::Default);
     window.setVerticalSyncEnabled(true);
-    Vector2u windowSize = window.getSize();
-    float maxX = windowSize.x;
-    float maxY = windowSize.y;
 
-    circle1.setFillColor(Color::White);
-    circle1.setOrigin(20, 20);
-    
+    if (!wiseTexture.loadFromFile("res/Sprite/first-sprite/hero_sheet.png"))
+        cout << "Error charging texture" << endl ;
 
-
-    loadFont(font);
-    setText(txt, font,"Ntm césar", 50, Color::Red, Text::Bold | Text::Underlined);
+    wiseSprite.setTexture(wiseTexture);
 
 	while (window.isOpen())
     {
@@ -42,18 +36,14 @@ int main()
         while (window.pollEvent(event))
         {
             input.InputHandler(event, window);
-            txt.setString("");
         }
 
-        checkButton(maxX, maxY);
-
+        checkButton();
+        animPlayer();
 
         window.clear(Color::Black);
 
-		window.draw(txt);
-		window.draw(positionX);
-		window.draw(positionY);
-        window.draw(circle1);
+        window.draw(wiseSprite);
 
         window.display();
 
@@ -62,80 +52,80 @@ int main()
     return 0;
 }
 
-void loadFont(Font &font) 
+void checkButton()
 {
-    if (!font.loadFromFile("res/fonts/font_halloween.ttf")) cout << "can't load font" << endl;
     
-}
+        if (input.GetButton().left == true)
+        {
+            if(wiseAtk)
+            {
+                wiseAnim.y = Left_Atk;
 
-void setText(Text& txt, Font& font, String texte, unsigned int charSize, Color color, Uint32 style)
-{
-    txt.setFont(font);
-    txt.setString(texte);
-    txt.setCharacterSize(charSize);
-    txt.setFillColor(color);
-    txt.setStyle(style);
-}
+            } else
+            {
+                wiseAnim.y = Left;
+            }
+            wiseSprite.move(-WALK_SPEED, 0);
+            wiseIdle = false;
+        }
 
-void checkButton(float maxX, float maxY)
-{
-    if(input.GetButton().left == true)
-    {
-        cout << "avant1 : " << posX << endl;
-        posX -= 10;
-        cout << "apres1 : " << posX << endl;
+        else if (input.GetButton().right == true)
+        {
+            if (wiseAtk)
+            {
+                wiseAnim.y = Right_Atk;
 
-        if (posX < 0)
-            posX = 0;
-        if (posX >= maxX)
-            posX = maxX;
-        //sprintf_s(temp, "%d", posX);
-        //setText(positionX, font, temp, 300, Color::Blue, Text::Bold);
-    }
+            }
+            else
+            {
+                wiseAnim.y = Right;
+            }
+            wiseSprite.move(WALK_SPEED, 0);
+            wiseIdle = false;
+        }
 
-    if(input.GetButton().right == true)
-    {
-        cout << "avant2 : " << posX << endl;
-        posX += 10;
-        cout << "apres2 : " << posX << endl;
+        else if (input.GetButton().up == true)
+        {
+            if (wiseAtk)
+            {
+                wiseAnim.y = Up_Atk;
 
-        if (posX < 0)
-            posX = 0;
-        if (posX >= maxX)
-            posX = maxX;
-        //sprintf_s(temp, "%d", posX);
-        //setText(positionX, font, temp, 300, Color::Blue, Text::Bold);
-    }
+            }
+            else
+            {
+                wiseAnim.y = Up;
+            }
+            wiseSprite.move(0, -WALK_SPEED);
+            wiseIdle = false;
+        }
 
-    if (input.GetButton().up == true)
-    {
-        posY -= 10;
-        if (posY < 0)
-            posY = 0;
-        if (posY >= maxY)
-            posY = maxY;
-        //sprintf_s(temp, "%d", posY);
-        //setText(positionY, font, temp, 500, Color::Yellow, Text::Bold);
-    }
+        else if (input.GetButton().down == true)
+        {
+            if (wiseAtk)
+            {
+                wiseAnim.y = Down_Atk;
 
-    if (input.GetButton().down == true)
-    {
-        posY += 10;
-        if (posY < 0)
-            posY = 0;
-        if (posY >= maxY)
-            posY = maxY;
-        //sprintf_s(temp, "%d", posY);
-        //setText(positionY, font, temp, 500, Color::Yellow, Text::Bold);
-    }
+            }
+            else
+            {
+                wiseAnim.y = Down;
+            }
+            wiseSprite.move(0, WALK_SPEED);
+            wiseIdle = false;
+        }
 
-    circle1.setPosition(posX, posY);
+        else
+        {
+            wiseIdle = true;
+        }
 
-
-    if (input.GetButton().attack == true)
-    {
-        setText(txt, font, "Attack", 500, Color::White, Text::Bold);
-    }
+        if (input.GetButton().attack == true && !wiseAtk)
+        {
+            wiseAtk = true;
+            wiseAnim.x = 0;
+            wiseAnim.y += 4;
+        }
+    
 
     if (input.GetButton().escape == true)
     {
@@ -145,5 +135,37 @@ void checkButton(float maxX, float maxY)
 
 }
 
+void animPlayer()
+{
+    wiseSprite.setTextureRect(IntRect(wiseAnim.x * SPRITE_SIZE, wiseAnim.y * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE));
+    wiseSprite.setScale(4, 4);
+
+    if (wiseAnimClock.getElapsedTime().asSeconds() > 0.1f)
+    {
+        if (wiseAnim.x * SPRITE_SIZE >= wiseTexture.getSize().x - SPRITE_SIZE)
+        {
+            wiseAnim.x = 0;
+
+            if(wiseAtk)
+            {
+                wiseAtk = false;
+                wiseAnim.y -= 4;
+            }
+        }
+
+        else
+        {
+            if (!wiseIdle || wiseAtk)
+            {
+                wiseAnim.x++;
+            }
+        }
+
+        wiseAnimClock.restart();
+
+    }
+
+
+}
 
 

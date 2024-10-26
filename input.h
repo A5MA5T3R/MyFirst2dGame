@@ -2,6 +2,11 @@
 #define INPUT_H
 
 #include <SFML/Graphics.hpp>
+#include <fstream> //pour travailler avec des fichiers
+#include <string> //pour travailler avec des chaines de caracteres
+#include <vector>
+#include <sstream> //pr travailler avec des buffers et des streams
+#include <utility>
 
 using namespace sf;
 using namespace std;
