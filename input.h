@@ -14,7 +14,7 @@ using namespace std;
 
 class Input
 {
-	struct Button { bool left, right, down, up, attack, escape; };
+	struct Button { bool left, right, down, up, attack, escape, space; };
 
 public:
 	Input();
@@ -25,7 +25,7 @@ public:
 
 private:
 	Button button;
-	
+
 };
 
 

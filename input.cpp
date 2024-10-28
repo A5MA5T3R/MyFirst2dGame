@@ -28,9 +28,13 @@ void Input::InputHandler(Event event, RenderWindow& window)
 			button.escape = true;
 			break;
 
+		case Keyboard::Space:
+			button.space = true;
+			break;
+
 		case Keyboard::Z:
 			button.up = true;
-			break;	
+			break;
 
 		case Keyboard::Q:
 			button.left = true;
@@ -39,7 +43,7 @@ void Input::InputHandler(Event event, RenderWindow& window)
 		case Keyboard::S:
 			button.down = true;
 			break;
-			
+
 		case Keyboard::D:
 			button.right = true;
 			break;
@@ -48,7 +52,7 @@ void Input::InputHandler(Event event, RenderWindow& window)
 			break;
 		}
 	}
-	
+
 	if (event.type == Event::KeyReleased)
 	{
 		switch (event.key.code)
@@ -57,9 +61,13 @@ void Input::InputHandler(Event event, RenderWindow& window)
 			button.escape = false;
 			break;
 
+		case Keyboard::Space:
+			button.space = false;
+			break;
+
 		case Keyboard::Z:
 			button.up = false;
-			break;	
+			break;
 
 		case Keyboard::Q:
 			button.left = false;
@@ -68,7 +76,7 @@ void Input::InputHandler(Event event, RenderWindow& window)
 		case Keyboard::S:
 			button.down = false;
 			break;
-			
+
 		case Keyboard::D:
 			button.right = false;
 			break;
@@ -79,15 +87,15 @@ void Input::InputHandler(Event event, RenderWindow& window)
 	}
 
 	if (event.type == Event::MouseButtonPressed) {
-		
+
 		if (event.mouseButton.button == Mouse::Left)
 		{
 			button.attack = true;
 		}
 	}
-	
+
 	if (event.type == Event::MouseButtonReleased) {
-		
+
 		if (event.mouseButton.button == Mouse::Left)
 		{
 			button.attack = false;

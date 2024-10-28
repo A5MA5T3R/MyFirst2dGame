@@ -18,3 +18,24 @@ RECHERCHES
 sprite sheet
 sprite sheet generator (rpg)
 sprite sheet cc0 (public) ou opengameart.org    itch.io
+
+COLLISIONS FACILE
+FloatRect boudingBoxRect = rects[(i+j*25)].getGlobalBounds();
+if (boudingboxhero.intersects(boudingBoxRect))
+{
+//collision
+} else
+{
+//quedal
+}
+
+
+
+GENERER UN VRAI NOMBRE ALEATOIRE
+random_device rd; 
+mt19937 gen(rd()); 
+
+uniform_int_distribution<> dis(1, 1000);
+
+int randomNumber = dis(gen);
+cout << "Nombre aléatoire entre 1 et 1000 : " << randomNumber << endl;

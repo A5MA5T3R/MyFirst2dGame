@@ -1,0 +1,99 @@
+int wisePosX = round(wiseSprite.getPosition().x / SPRITE_SIZE);
+int wisePosY = round(wiseSprite.getPosition().y / SPRITE_SIZE);
+if (showDebugMap)
+{
+    cout << levelLoaded[(wisePosX + wisePosY * 25)] << endl;
+    cout << wisePosX << " , " << wisePosY << endl;
+}     
+
+    if (input.GetButton().left == true)
+    {
+        if (wiseAtk)
+        {
+            wiseAnim.y = Left_Atk;
+
+        }
+        else
+        {
+            wiseAnim.y = Left;
+        }
+
+        wisePosX = round((wiseSprite.getPosition().x - (WALK_SPEED * 3)) / SPRITE_SIZE);
+        if (levelLoadedCol[(wisePosX + wisePosY * 25)] == 0 && wisePosX > -1)
+        {
+            wiseSprite.move(-WALK_SPEED, 0);
+        } 
+        wiseIdle = false;
+    }
+
+    else if (input.GetButton().right == true)
+    {
+        if (wiseAtk)
+        {
+            wiseAnim.y = Right_Atk;
+
+        }
+        else
+        {
+            wiseAnim.y = Right;
+        }
+
+        wisePosX = round((wiseSprite.getPosition().x + (WALK_SPEED * 3)) / SPRITE_SIZE);
+        if (levelLoadedCol[(wisePosX + wisePosY * 25)] == 0 && wisePosX < 25)
+        {
+            wiseSprite.move(WALK_SPEED, 0);
+        }
+        wiseIdle = false;
+    }
+
+    else if (input.GetButton().up == true)
+    {
+        if (wiseAtk)
+        {
+            wiseAnim.y = Up_Atk;
+
+        }
+        else
+        {
+            wiseAnim.y = Up;
+        }
+
+        wisePosY = round((wiseSprite.getPosition().y - (WALK_SPEED * 3)) / SPRITE_SIZE);
+        if (levelLoadedCol[(wisePosX + wisePosY * 25)] == 0 && wisePosY > -1)
+        {
+            wiseSprite.move(0, -WALK_SPEED);
+        }
+        wiseIdle = false;
+    }
+
+    else if (input.GetButton().down == true)
+    {
+        if (wiseAtk)
+        {
+            wiseAnim.y = Down_Atk;
+
+        }
+        else
+        {
+            wiseAnim.y = Down;
+        }
+
+        wisePosY = round((wiseSprite.getPosition().y + (WALK_SPEED * 3)) / SPRITE_SIZE);
+        if (levelLoadedCol[(wisePosX + wisePosY * 25)] == 0 && wisePosY < 18)
+        {
+            wiseSprite.move(0, WALK_SPEED);
+        }
+        wiseIdle = false;
+    }
+
+    else 
+    {
+        wiseIdle = true;
+    }
+
+    if (input.GetButton().attack == true)
+    {
+        wiseAtk = true; 
+        wiseAnim.x = 0; 
+        wiseAnim.y += 4; 
+    }
