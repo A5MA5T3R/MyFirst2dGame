@@ -1,34 +1,23 @@
 ﻿#pragma once
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "Scene.h"
 
-using namespace std;
-using namespace sf;
 
-#include "Player.h"
-
-class Game
+class Game : public Scene
 {
 
 public:
 	Game();
-	void Run();
-	void WindowInitialize();
-	void Initialize();
 
+	virtual void Initialize(RenderWindow& window);
+	virtual void Update(RenderWindow& window);
+	virtual void Render(RenderWindow& window);
 
+	void Draw(RenderWindow& window) const;
 
 private:
-	const int WINDOW_WIDTH = 1920;
-	const int WINDOW_HEIGHT = 1080;
-	ContextSettings settings;
-	RenderWindow window;
+	Clock clock;
+	float deltaTime;
 
-	Player player1;
-	Player player2;
-
-	void Update();
-	void Draw();
-	void Render();
-
+	Player1 player1;
+	Player2 player2;
 };

@@ -7,6 +7,6 @@ bool InputHandler::IsKeyPressed(Keyboard::Key key)
 
 bool InputHandler::IsKeyReleased(Keyboard::Key key) 
 {
-	return Keyboard::isKeyPressed(key);
+	return !(Keyboard::isKeyPressed(key));
 }
 
