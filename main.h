@@ -17,6 +17,7 @@ using namespace sf;
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "Accueil.h"
+#include "Pause.h"
 
 
 const int WINDOW_WIDTH = 1920;

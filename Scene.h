@@ -9,7 +9,6 @@ using namespace sf;
 #include "InputHandler.h"
 #include "ResourceManager.h"
 
-
 class Scene
 {
 public:
@@ -28,4 +27,3 @@ public:
 private:
 	
 };
-

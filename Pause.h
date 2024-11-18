@@ -1,16 +1,16 @@
 ﻿#pragma once
 #include "Scene.h"
 
-class Accueil : public Scene
+class Pause : public Scene
 {
 
 public:
-	Accueil() = default;
+	Pause() = default;
 	virtual void Initialize(RenderWindow& window) override;
 	virtual void Update(RenderWindow& window) override;
 	virtual void Render(RenderWindow& window) override;
 
-	Text& get_text(String text); 
+	Text& get_text(String texte);
 	bool handleTextClick(RenderWindow& window, Text& text);
 	void center_text(RenderWindow& window, Text& txt);
 	void set_text(Text& txt, Font& font, String texte, unsigned int charSize, Color color, Uint32 style);
@@ -18,7 +18,6 @@ public:
 
 private:
 	Text titre;
-	Text solo;
-	Text multi;
+	Text resume;
 	Text leave;
 };

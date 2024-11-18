@@ -12,7 +12,7 @@ public:
 	virtual void Update(RenderWindow& window);
 	virtual void Render(RenderWindow& window);
 
-	void Draw(RenderWindow& window) const;
+	void Draw(RenderWindow& window);
 
 private:
 	Clock clock;

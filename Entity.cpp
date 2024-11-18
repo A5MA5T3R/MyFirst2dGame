@@ -64,7 +64,3 @@ void Entity::Update() {
 
 
 }
-
-void Entity::Draw(RenderWindow& window) const {
-    window.draw(sprite);
-}

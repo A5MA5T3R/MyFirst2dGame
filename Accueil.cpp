@@ -6,12 +6,15 @@ void Accueil::Initialize(RenderWindow& window)
 	set_text(titre, *font, "Arena", 150, Color::Red, Text::Bold);
 	set_text(solo, *font, "Solo", 75, Color::White, Text::Bold);
 	set_text(multi, *font, "Multiplayer", 75, Color::White, Text::Bold);
+	set_text(leave, *font, "Leave", 75, Color::White, Text::Bold);
 	center_text(window, titre);
 	center_text(window, solo);
 	center_text(window, multi);
+	center_text(window, leave);
 	titre.setPosition(titre.getPosition().x, titre.getPosition().y - 300);
 	solo.setPosition(solo.getPosition().x, solo.getPosition().y - 50);
 	multi.setPosition(multi.getPosition().x, multi.getPosition().y + 100);
+	leave.setPosition(leave.getPosition().x, leave.getPosition().y + 250);
 }
 
 void Accueil::Update(RenderWindow& window)
@@ -31,6 +34,7 @@ void Accueil::Draw(RenderWindow& window)
 	window.draw(titre);
 	window.draw(solo);
 	window.draw(multi);
+	window.draw(leave);
 }
 
 void Accueil::set_text(Text& txt, Font& font, String texte, unsigned int charSize, Color color, Uint32 style) {
@@ -59,7 +63,11 @@ bool Accueil::handleTextClick(RenderWindow& window, Text& text) {
 	return  false;
 }
 
-Text& Accueil::get_text()
+Text& Accueil::get_text(String text)
 {
-	return multi;
+	if (text == "Multi")
+		return multi;
+	if (text == "Leave")
+		return leave;
+	throw std::invalid_argument("Invalid text argument");
 }

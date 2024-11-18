@@ -1,7 +1,7 @@
 ﻿#include "Player.h"
 
 Player::Player(const string& name, const string& path, float x, float y, Vector2f scale)
-	: Entity(name, path, x, y, scale), speed(300.0f), heroClock(), AnimX(0), AnimY(0), SpriteSize(32), health(100), check_one_atk(0)
+	: Entity(name, path, x, y, scale), speed(300.0f), heroClock(), AnimX(0), AnimY(0), SpriteSize(32), health(100), check_one_atk(0), healthBar((Vector2f(health, 10)))
 {
 	direction.Down = direction.Left = direction.Right = direction.Up = false;
 	direction.case_Idle = true;
@@ -18,12 +18,14 @@ Player2::Player2(const string& name, const string& path, float x, float y, Vecto
 {
 }
 
+
 void Player::Initialize()
 {
 	setSpriteTexture();
 	sprite.setTextureRect(IntRect(AnimX, AnimY, SpriteSize, SpriteSize));
 	setSpritePosition(posX, posY);
 	setSpriteScale(Scale);
+	health_bar();
 }
 
 void Player::Animation()
@@ -167,6 +169,7 @@ int Player::get_health() const
 void Player::set_health(int h)
 {
 	health = h;
+	healthBar.setSize(Vector2f(health, 10));
 }
 
 void Player::is_dead() const
@@ -177,6 +180,19 @@ void Player::is_dead() const
 	}
 }
 
+void Player::health_bar()
+{
+	healthBar.setFillColor(Color::Green);
+	healthBar.setPosition(sprite.getPosition().x + 20, sprite.getPosition().y - 10);
+}
+
+RectangleShape Player::get_health_bar()
+{
+	return healthBar;
+}
+
+
+
 void Player1::deal_damage(Player& player2)
 {
 	if (check_one_atk == 0)
@@ -184,6 +200,7 @@ void Player1::deal_damage(Player& player2)
 		if (sprite.getGlobalBounds().intersects(player2.getSprite().getGlobalBounds()) && direction.Attack)
 		{
 			player2.set_health(player2.get_health() - 10);
+			player2.get_health_bar().setFillColor(Color::Red);
 			cout << player2.get_health() << endl;
 			check_one_atk = 1;
 		}
@@ -201,6 +218,7 @@ void Player2::deal_damage(Player& player1)
 		if (sprite.getGlobalBounds().intersects(player1.getSprite().getGlobalBounds()) && direction.Attack)
 		{
 			player1.set_health(player1.get_health() - 10);
+			player1.get_health_bar().setFillColor(Color::Red);
 			cout << player1.get_health() << endl;
 			check_one_atk = 1;
 		}
@@ -215,6 +233,7 @@ void Player1::Update(float deltaTime)
 {
 	set_direction();
 	move(deltaTime, direction);
+	health_bar();
 	Animation();
 	is_dead();
 }
@@ -223,6 +242,7 @@ void Player2::Update(float deltaTime)
 {
 	set_direction();
 	move(deltaTime, direction);
+	health_bar();
 	Animation();
 	is_dead();
 }
@@ -284,7 +304,7 @@ void Player2::set_direction() {
 	}
 }
 
-
-
-
-
+void Player::Draw(RenderWindow& window) const {
+	window.draw(sprite);
+	window.draw(healthBar);
+}

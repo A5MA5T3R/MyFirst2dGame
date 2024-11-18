@@ -29,7 +29,7 @@ void Game::Update(RenderWindow& window)
 
 }
 
-void Game::Draw(RenderWindow& window) const
+void Game::Draw(RenderWindow& window) 
 {
 	player1.Draw(window);
 	player2.Draw(window);

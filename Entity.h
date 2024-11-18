@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 using namespace std;
 using namespace sf;
@@ -36,6 +38,6 @@ public:
 
     virtual void Initialize();
     virtual void Update();
-    virtual void Draw(RenderWindow& window) const;
+    virtual void Draw(RenderWindow& window) const = 0;
 	
 };

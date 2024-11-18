@@ -15,6 +15,7 @@ protected:
 	Texture* spriteTexture;
 	int health;
 	int check_one_atk;
+	RectangleShape healthBar;
 
 public:
 
@@ -28,11 +29,17 @@ public:
 
 	void is_dead() const;
 
+	void health_bar();
+
+	RectangleShape get_health_bar();
+
 	int get_health() const;
 
 	void set_health(int h);
 
 	bool can_move(const string& d);
+
+	virtual void Draw(RenderWindow& window) const;
 
 };
 
